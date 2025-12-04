@@ -17,6 +17,14 @@ export interface User {
   deliveryOptions?: string[];
 }
 
+export interface ShowcaseItem {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  categoryId: string;
+}
+
 export interface Category {
   id: string;
   name: string;
@@ -25,6 +33,7 @@ export interface Category {
   description: string;
   requestCount: number;
   image: string;
+  showcaseItems?: ShowcaseItem[];
 }
 
 export interface Request {
