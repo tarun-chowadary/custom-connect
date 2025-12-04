@@ -6,8 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
-import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import heroImage from '@/assets/hero-craftsman.jpg';
+import { Eye, EyeOff, Loader2, Mail, Lock, User, ArrowRight, Sparkles } from 'lucide-react';
 
 type AuthMode = 'login' | 'signup' | 'forgot';
 
@@ -35,7 +34,6 @@ export const Auth = () => {
         toast.success('Account created successfully!');
         navigate('/home');
       } else {
-        // Handle forgot password
         toast.success('Password reset link sent to your email');
         setMode('login');
       }
@@ -45,68 +43,44 @@ export const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Panel - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <img 
-          src={heroImage} 
-          alt="Artisan crafting" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/40" />
-        <div className="relative z-10 flex flex-col justify-center px-16 text-primary-foreground">
-          <h1 className="text-5xl font-display font-bold mb-6 animate-fade-up">
-            Customise.in
-          </h1>
-          <p className="text-xl opacity-90 max-w-md animate-fade-up" style={{ animationDelay: '0.1s' }}>
-            Where your imagination meets master craftsmen. Get unique, custom-made products built just for you.
-          </p>
-          
-          <div className="mt-12 space-y-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center text-2xl">
-                🎨
-              </div>
-              <div>
-                <h3 className="font-semibold">Post Your Vision</h3>
-                <p className="text-sm opacity-80">Describe what you want, no matter how unique</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center text-2xl">
-                🤝
-              </div>
-              <div>
-                <h3 className="font-semibold">Connect with Makers</h3>
-                <p className="text-sm opacity-80">Get proposals from skilled artisans</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary-foreground/20 flex items-center justify-center text-2xl">
-                ✨
-              </div>
-              <div>
-                <h3 className="font-semibold">Receive Your Creation</h3>
-                <p className="text-sm opacity-80">Get your custom product delivered</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-accent/20 to-primary/10" />
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent/30 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      {/* Right Panel - Auth Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-background">
-        <Card className="w-full max-w-md shadow-deep border-0">
+      {/* Decorative Elements */}
+      <div className="absolute top-10 right-10 hidden lg:block">
+        <Sparkles className="w-8 h-8 text-primary/40 animate-pulse" />
+      </div>
+      <div className="absolute bottom-10 left-10 hidden lg:block">
+        <div className="w-16 h-16 rounded-xl bg-accent/20 backdrop-blur-sm rotate-12" />
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-md mx-4">
+        {/* Logo */}
+        <div className="text-center mb-8 animate-fade-up">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-gradient mb-2">
+            Customise.in
+          </h1>
+          <p className="text-muted-foreground">
+            Where imagination meets craftsmanship
+          </p>
+        </div>
+
+        {/* Auth Card */}
+        <Card className="shadow-deep border-0 backdrop-blur-sm bg-card/95 animate-fade-up" style={{ animationDelay: '0.1s' }}>
           <CardHeader className="text-center pb-2">
-            <div className="lg:hidden mb-4">
-              <span className="text-3xl font-display font-bold text-gradient">Customise.in</span>
-            </div>
-            <CardTitle className="text-2xl">
+            <CardTitle className="text-2xl font-display">
               {mode === 'login' && 'Welcome back'}
               {mode === 'signup' && 'Create your account'}
               {mode === 'forgot' && 'Reset password'}
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-muted-foreground">
               {mode === 'login' && 'Sign in to access the marketplace'}
               {mode === 'signup' && 'Join thousands of buyers and makers'}
               {mode === 'forgot' && "We'll send you a reset link"}
@@ -116,37 +90,47 @@ export const Auth = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {mode === 'signup' && (
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="Enter your name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
+                  <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="name"
+                      placeholder="Enter your name"
+                      className="pl-10"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
+                  </div>
                 </div>
               )}
               
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                />
+                <Label htmlFor="email" className="text-sm font-medium">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    className="pl-10"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                  />
+                </div>
               </div>
 
               {mode !== 'forgot' && (
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-sm font-medium">Password</Label>
                   <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="password"
                       type={showPassword ? 'text' : 'password'}
                       placeholder="••••••••"
+                      className="pl-10 pr-10"
                       value={formData.password}
                       onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                       required
@@ -158,7 +142,7 @@ export const Auth = () => {
                       className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      {showPassword ? <EyeOff className="h-4 w-4 text-muted-foreground" /> : <Eye className="h-4 w-4 text-muted-foreground" />}
                     </Button>
                   </div>
                 </div>
@@ -169,7 +153,7 @@ export const Auth = () => {
                   <Button 
                     type="button" 
                     variant="link" 
-                    className="px-0 text-sm"
+                    className="px-0 text-sm text-muted-foreground hover:text-primary"
                     onClick={() => setMode('forgot')}
                   >
                     Forgot password?
@@ -177,42 +161,68 @@ export const Auth = () => {
                 </div>
               )}
 
-              <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+              <Button type="submit" className="w-full group" size="lg" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {mode === 'login' && 'Sign In'}
                 {mode === 'signup' && 'Create Account'}
                 {mode === 'forgot' && 'Send Reset Link'}
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </form>
 
             <div className="mt-6 text-center text-sm">
               {mode === 'login' && (
-                <>
+                <p className="text-muted-foreground">
                   Don't have an account?{' '}
-                  <Button variant="link" className="px-1" onClick={() => setMode('signup')}>
+                  <button 
+                    className="text-primary font-medium hover:underline"
+                    onClick={() => setMode('signup')}
+                  >
                     Sign up
-                  </Button>
-                </>
+                  </button>
+                </p>
               )}
               {mode === 'signup' && (
-                <>
+                <p className="text-muted-foreground">
                   Already have an account?{' '}
-                  <Button variant="link" className="px-1" onClick={() => setMode('login')}>
+                  <button 
+                    className="text-primary font-medium hover:underline"
+                    onClick={() => setMode('login')}
+                  >
                     Sign in
-                  </Button>
-                </>
+                  </button>
+                </p>
               )}
               {mode === 'forgot' && (
-                <>
+                <p className="text-muted-foreground">
                   Remember your password?{' '}
-                  <Button variant="link" className="px-1" onClick={() => setMode('login')}>
+                  <button 
+                    className="text-primary font-medium hover:underline"
+                    onClick={() => setMode('login')}
+                  >
                     Sign in
-                  </Button>
-                </>
+                  </button>
+                </p>
               )}
             </div>
           </CardContent>
         </Card>
+
+        {/* Features Preview */}
+        <div className="mt-8 grid grid-cols-3 gap-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+          <div className="text-center p-4 rounded-xl bg-card/50 backdrop-blur-sm">
+            <div className="text-2xl mb-2">🎨</div>
+            <p className="text-xs text-muted-foreground">Post Ideas</p>
+          </div>
+          <div className="text-center p-4 rounded-xl bg-card/50 backdrop-blur-sm">
+            <div className="text-2xl mb-2">🤝</div>
+            <p className="text-xs text-muted-foreground">Find Makers</p>
+          </div>
+          <div className="text-center p-4 rounded-xl bg-card/50 backdrop-blur-sm">
+            <div className="text-2xl mb-2">✨</div>
+            <p className="text-xs text-muted-foreground">Get Custom</p>
+          </div>
+        </div>
       </div>
     </div>
   );
