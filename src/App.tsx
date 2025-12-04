@@ -8,6 +8,7 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Categories from "./pages/Categories";
+import CategoryDetail from "./pages/CategoryDetail";
 import CreateRequest from "./pages/CreateRequest";
 import RequestDetail from "./pages/RequestDetail";
 import Profile from "./pages/Profile";
@@ -28,7 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
             <Route path="/categories" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
-            <Route path="/categories/:slug" element={<ProtectedRoute><Categories /></ProtectedRoute>} />
+            <Route path="/categories/:slug" element={<ProtectedRoute><CategoryDetail /></ProtectedRoute>} />
             <Route path="/create-request" element={<ProtectedRoute><CreateRequest /></ProtectedRoute>} />
             <Route path="/request/:id" element={<ProtectedRoute><RequestDetail /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />

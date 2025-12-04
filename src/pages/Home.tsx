@@ -5,13 +5,10 @@ import { RequestCard } from '@/components/RequestCard';
 import { CategoryCard } from '@/components/CategoryCard';
 import { MakerCard } from '@/components/MakerCard';
 import { categories, sampleRequests, featuredMakers } from '@/data/mockData';
-import { useAuth } from '@/contexts/AuthContext';
-import { ArrowRight, Sparkles, TrendingUp, Clock } from 'lucide-react';
+import { ArrowRight, Sparkles, TrendingUp, Clock, Plus } from 'lucide-react';
 import heroImage from '@/assets/hero-craftsman.jpg';
 
 const Home = () => {
-  const { user } = useAuth();
-
   return (
     <Layout>
       {/* Hero Section */}
@@ -88,11 +85,25 @@ const Home = () => {
             </Button>
           </Link>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {sampleRequests.map((request) => (
-            <RequestCard key={request.id} request={request} />
-          ))}
-        </div>
+        {sampleRequests.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {sampleRequests.map((request) => (
+              <RequestCard key={request.id} request={request} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-muted/30 rounded-xl">
+            <TrendingUp className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
+            <h3 className="text-lg font-semibold mb-2">No trending requests yet</h3>
+            <p className="text-muted-foreground mb-6">Be the first to create a custom product request</p>
+            <Link to="/create-request">
+              <Button>
+                <Plus className="h-4 w-4 mr-2" />
+                Create Request
+              </Button>
+            </Link>
+          </div>
+        )}
       </section>
 
       {/* Recent Requests */}
@@ -109,28 +120,44 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sampleRequests.slice().reverse().map((request) => (
-              <RequestCard key={request.id} request={request} />
-            ))}
-          </div>
+          {sampleRequests.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {sampleRequests.slice().reverse().map((request) => (
+                <RequestCard key={request.id} request={request} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-background rounded-xl">
+              <Clock className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
+              <h3 className="text-lg font-semibold mb-2">No requests yet</h3>
+              <p className="text-muted-foreground mb-6">Create a request to find skilled makers</p>
+              <Link to="/create-request">
+                <Button>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Request
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Featured Makers */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-display font-bold">Featured Makers</h2>
-            <p className="text-muted-foreground mt-1">Top-rated craftsmen ready to create</p>
+      {featuredMakers.length > 0 && (
+        <section className="container mx-auto px-4 py-12">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-display font-bold">Featured Makers</h2>
+              <p className="text-muted-foreground mt-1">Top-rated craftsmen ready to create</p>
+            </div>
           </div>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredMakers.map((maker) => (
-            <MakerCard key={maker.id} maker={maker} />
-          ))}
-        </div>
-      </section>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredMakers.map((maker) => (
+              <MakerCard key={maker.id} maker={maker} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="bg-foreground text-background py-16">
