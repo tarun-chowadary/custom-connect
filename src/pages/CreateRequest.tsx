@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -11,10 +11,13 @@ import { Badge } from '@/components/ui/badge';
 import { categories } from '@/data/mockData';
 import { toast } from 'sonner';
 import { Upload, X, Plus, IndianRupee, Calendar, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { AIDescriptionModal } from '@/components/AIDescriptionModal';
 
 const CreateRequest = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [aiModalOpen, setAiModalOpen] = useState(false);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -59,6 +62,27 @@ const CreateRequest = () => {
     setFormData({ ...formData, specs: newSpecs });
   };
 
+  const handleUseDescription = (description: string) => {
+    setFormData({ ...formData, description });
+    toast.success('Description applied!');
+  };
+
+  const handleInsertAtCursor = (description: string) => {
+    const textarea = descriptionRef.current;
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const currentValue = formData.description;
+      const newValue = currentValue.substring(0, start) + description + currentValue.substring(end);
+      setFormData({ ...formData, description: newValue });
+      toast.success('Description inserted!');
+    } else {
+      // Fallback: append to the end
+      setFormData({ ...formData, description: formData.description + description });
+      toast.success('Description added!');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -101,8 +125,21 @@ const CreateRequest = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Detailed Description *</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="description">Detailed Description *</Label>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="gap-1.5 text-primary hover:text-primary/80"
+                    onClick={() => setAiModalOpen(true)}
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Ask AI to write this
+                  </Button>
+                </div>
                 <Textarea
+                  ref={descriptionRef}
                   id="description"
                   placeholder="Describe your vision in detail. Include materials, style, size, color preferences, inspiration sources, and any specific requirements..."
                   className="min-h-[150px]"
@@ -338,6 +375,14 @@ const CreateRequest = () => {
           </div>
         </form>
       </div>
+
+      <AIDescriptionModal
+        open={aiModalOpen}
+        onOpenChange={setAiModalOpen}
+        title={formData.title}
+        onUseDescription={handleUseDescription}
+        onInsertAtCursor={handleInsertAtCursor}
+      />
     </Layout>
   );
 };
