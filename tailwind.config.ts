@@ -9,13 +9,13 @@ export default {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1280px",
+        "2xl": "1400px",
       },
     },
     extend: {
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -64,13 +64,14 @@ export default {
         gold: {
           DEFAULT: "hsl(var(--gold))",
           muted: "hsl(var(--gold-muted))",
-          light: "hsl(var(--gold-light))",
         },
-        champagne: "hsl(var(--champagne))",
-        ivory: "hsl(var(--ivory))",
-        charcoal: "hsl(var(--charcoal))",
+        teal: {
+          DEFAULT: "hsl(var(--teal))",
+          light: "hsl(var(--teal-light))",
+        },
+        terracotta: "hsl(var(--terracotta))",
+        cream: "hsl(var(--cream))",
         "warm-gray": "hsl(var(--warm-gray))",
-        "soft-gray": "hsl(var(--soft-gray))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +81,10 @@ export default {
         "2xl": "calc(var(--radius) + 8px)",
       },
       boxShadow: {
-        'premium': 'var(--shadow-md)',
-        'premium-lg': 'var(--shadow-lg)',
+        'elegant': 'var(--shadow-md)',
         'glow': 'var(--shadow-glow)',
         'soft': 'var(--shadow-sm)',
+        'deep': 'var(--shadow-lg)',
       },
       keyframes: {
         "accordion-down": {
@@ -94,10 +95,20 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        shimmer: "shimmer 2s linear infinite",
+        pulse: "pulse 2s ease-in-out infinite",
       },
     },
   },

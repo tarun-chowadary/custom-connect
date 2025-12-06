@@ -7,7 +7,7 @@ interface ShowcaseItemCardProps {
 
 export const ShowcaseItemCard = ({ item }: ShowcaseItemCardProps) => {
   return (
-    <Card className="group overflow-hidden border-border/50 hover:shadow-premium transition-all duration-300">
+    <Card className="group overflow-hidden border-0 shadow-elegant hover:shadow-deep transition-all duration-300">
       <div className="aspect-square overflow-hidden bg-muted">
         <img
           src={item.image}
@@ -16,15 +16,15 @@ export const ShowcaseItemCard = ({ item }: ShowcaseItemCardProps) => {
         />
       </div>
       <div className="p-4">
-        <h3 className="font-display font-medium text-foreground mb-1 line-clamp-1">
+        <h3 className="font-display font-semibold text-foreground mb-1 line-clamp-1">
           {item.name}
         </h3>
-        <p className="text-xs text-muted-foreground line-clamp-2">
+        <p className="text-sm text-muted-foreground line-clamp-2">
           {item.description}
         </p>
-        <div className="mt-3">
-          <span className="text-[10px] uppercase tracking-wide px-2 py-1 rounded-sm bg-muted text-muted-foreground">
-            Showcase
+        <div className="mt-3 flex items-center gap-2">
+          <span className="text-xs px-2 py-1 rounded-full bg-accent/50 text-accent-foreground">
+            Showcase Example
           </span>
         </div>
       </div>

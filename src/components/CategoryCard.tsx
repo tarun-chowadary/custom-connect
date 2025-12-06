@@ -9,20 +9,20 @@ interface CategoryCardProps {
 export const CategoryCard = ({ category }: CategoryCardProps) => {
   return (
     <Link to={`/categories/${category.slug}`}>
-      <Card className="group overflow-hidden hover:-translate-y-0.5 cursor-pointer relative border-border/50">
+      <Card className="group overflow-hidden hover:-translate-y-1 cursor-pointer relative">
         <div className="aspect-square overflow-hidden bg-muted">
           <img 
             src={category.image} 
             alt={category.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent" />
-          <div className="absolute inset-0 p-3 flex flex-col justify-end">
-            <div className="text-2xl mb-1">{category.icon}</div>
-            <h3 className="font-display font-medium text-sm text-white">
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+          <div className="absolute inset-0 p-4 flex flex-col justify-end">
+            <div className="text-3xl mb-2">{category.icon}</div>
+            <h3 className="font-display font-semibold text-lg text-primary-foreground">
               {category.name}
             </h3>
-            <p className="text-[10px] text-white/60">
+            <p className="text-xs text-primary-foreground/70">
               {category.requestCount} requests
             </p>
           </div>

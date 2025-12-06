@@ -167,16 +167,6 @@ export const categories: Category[] = [
       },
     ],
   },
-  {
-    id: 'others',
-    name: 'Others',
-    slug: 'others',
-    icon: '➕',
-    description: 'Custom items that don\'t fit other categories',
-    requestCount: 0,
-    image: categoryHomeDecor,
-    showcaseItems: [],
-  },
 ];
 
 export const featuredMakers: User[] = [];
