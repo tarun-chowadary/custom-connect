@@ -6,12 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { categories } from '@/data/mockData';
 import { toast } from 'sonner';
-import { Upload, X, Plus, IndianRupee, Calendar, Eye, EyeOff, Sparkles, FolderPlus } from 'lucide-react';
+import { Upload, X, Plus, IndianRupee, Calendar, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { AIDescriptionModal } from '@/components/AIDescriptionModal';
+import { cn } from '@/lib/utils';
 
 const CreateRequest = () => {
   const navigate = useNavigate();
@@ -97,7 +97,13 @@ const CreateRequest = () => {
     
     // Validate Others category description
     if (formData.categoryId === 'others' && !formData.otherCategoryDescription.trim()) {
-      toast.error('Please describe the category');
+      toast.error('Please specify your category');
+      return;
+    }
+
+    // Validate category selection
+    if (!formData.categoryId) {
+      toast.error('Please select a category');
       return;
     }
     
@@ -165,44 +171,74 @@ const CreateRequest = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="category">Category *</Label>
-                <Select
-                  value={formData.categoryId}
-                  onValueChange={handleCategoryChange}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        <span className="flex items-center gap-2">
-                          {cat.icon} {cat.name}
-                        </span>
-                      </SelectItem>
-                    ))}
-                    <SelectItem value="others">
-                      <span className="flex items-center gap-2">
-                        <FolderPlus className="h-4 w-4" /> Others
-                      </span>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="space-y-3">
+                <Label>Category *</Label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => handleCategoryChange(cat.id)}
+                      className={cn(
+                        "flex flex-col items-center justify-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                        "hover:border-primary/50 hover:bg-primary/5",
+                        formData.categoryId === cat.id
+                          ? "border-primary bg-primary/10 shadow-md"
+                          : "border-border bg-card"
+                      )}
+                    >
+                      <span className="text-2xl">{cat.icon}</span>
+                      <span className="text-sm font-medium text-foreground">{cat.name}</span>
+                    </button>
+                  ))}
+                  {/* Others Option */}
+                  <button
+                    type="button"
+                    onClick={() => handleCategoryChange('others')}
+                    className={cn(
+                      "flex flex-col items-center justify-center gap-2 p-4 rounded-xl border-2 transition-all duration-200",
+                      "hover:border-primary/50 hover:bg-primary/5",
+                      formData.categoryId === 'others'
+                        ? "border-primary bg-primary/10 shadow-md"
+                        : "border-dashed border-muted-foreground/30 bg-muted/30"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-8 h-8 rounded-full flex items-center justify-center transition-colors",
+                      formData.categoryId === 'others'
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted-foreground/20 text-muted-foreground"
+                    )}>
+                      <Plus className="h-4 w-4" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">Others</span>
+                  </button>
+                </div>
               </div>
 
-              {formData.categoryId === 'others' && (
-                <div className="space-y-2">
-                  <Label htmlFor="otherCategory">Describe the category *</Label>
+              {/* Animated Custom Category Input */}
+              <div
+                className={cn(
+                  "overflow-hidden transition-all duration-300 ease-out",
+                  formData.categoryId === 'others'
+                    ? "max-h-32 opacity-100 mt-4"
+                    : "max-h-0 opacity-0 mt-0"
+                )}
+              >
+                <div className="space-y-2 p-4 rounded-xl bg-muted/30 border border-border shadow-sm">
+                  <Label htmlFor="customCategory" className="text-sm text-muted-foreground">
+                    Specify your category *
+                  </Label>
                   <Input
-                    id="otherCategory"
-                    placeholder="e.g., Musical Instruments, Automotive Accessories, Pet Products..."
+                    id="customCategory"
+                    placeholder="Describe the category you want to use"
                     value={formData.otherCategoryDescription}
                     onChange={(e) => setFormData({ ...formData, otherCategoryDescription: e.target.value })}
-                    required
+                    className="bg-background border-border shadow-sm focus:ring-2 focus:ring-primary/20"
+                    required={formData.categoryId === 'others'}
                   />
                 </div>
-              )}
+              </div>
             </CardContent>
           </Card>
 
