@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { categories } from '@/data/mockData';
 import { toast } from 'sonner';
-import { Upload, X, Plus, IndianRupee, Calendar, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { Upload, X, Plus, IndianRupee, Calendar, Eye, EyeOff, Sparkles, FolderPlus } from 'lucide-react';
 import { AIDescriptionModal } from '@/components/AIDescriptionModal';
 
 const CreateRequest = () => {
@@ -22,6 +22,7 @@ const CreateRequest = () => {
     title: '',
     description: '',
     categoryId: '',
+    otherCategoryDescription: '',
     budgetMin: '',
     budgetMax: '',
     deadline: '',
@@ -29,6 +30,14 @@ const CreateRequest = () => {
     tags: [] as string[],
     specs: {} as Record<string, string>,
   });
+
+  const handleCategoryChange = (value: string) => {
+    if (value === 'others') {
+      setFormData({ ...formData, categoryId: value });
+    } else {
+      setFormData({ ...formData, categoryId: value, otherCategoryDescription: '' });
+    }
+  };
   const [newTag, setNewTag] = useState('');
   const [newSpecKey, setNewSpecKey] = useState('');
   const [newSpecValue, setNewSpecValue] = useState('');
@@ -85,6 +94,13 @@ const CreateRequest = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate Others category description
+    if (formData.categoryId === 'others' && !formData.otherCategoryDescription.trim()) {
+      toast.error('Please describe the category');
+      return;
+    }
+    
     setIsSubmitting(true);
     
     // Simulate API call
@@ -153,7 +169,7 @@ const CreateRequest = () => {
                 <Label htmlFor="category">Category *</Label>
                 <Select
                   value={formData.categoryId}
-                  onValueChange={(value) => setFormData({ ...formData, categoryId: value })}
+                  onValueChange={handleCategoryChange}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a category" />
@@ -166,9 +182,27 @@ const CreateRequest = () => {
                         </span>
                       </SelectItem>
                     ))}
+                    <SelectItem value="others">
+                      <span className="flex items-center gap-2">
+                        <FolderPlus className="h-4 w-4" /> Others
+                      </span>
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+
+              {formData.categoryId === 'others' && (
+                <div className="space-y-2">
+                  <Label htmlFor="otherCategory">Describe the category *</Label>
+                  <Input
+                    id="otherCategory"
+                    placeholder="e.g., Musical Instruments, Automotive Accessories, Pet Products..."
+                    value={formData.otherCategoryDescription}
+                    onChange={(e) => setFormData({ ...formData, otherCategoryDescription: e.target.value })}
+                    required
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
 
