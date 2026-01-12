@@ -1,73 +1,52 @@
-# Welcome to your Lovable project
+Customise.in
 
-## Project info
+Customise.in is an open-source full-stack marketplace platform designed to connect people who want highly customised products with skilled makers who can create them. The project focuses on building a structured, transparent, and reliable workflow for custom product requests, proposals, payments, and order fulfillment.
 
-**URL**: https://lovable.dev/projects/d635543c-1e75-4b3a-84af-21fad5a72fa8
+✨ About the Project
 
-## How can I edit this code?
+Many custom product ideas never get built because buyers and makers lack a trusted place to connect. Customise.in solves this by providing:
 
-There are several ways of editing your application.
+A request–proposal based marketplace flow
 
-**Use Lovable**
+Clear order lifecycle management
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d635543c-1e75-4b3a-84af-21fad5a72fa8) and start prompting.
+Secure communication and payments
 
-Changes made via Lovable will be committed automatically to this repo.
+Flexible categorisation for truly unique products
 
-**Use your preferred IDE**
+A clean and user-focused interface
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+The goal of this project is to explore how modern web technologies and thoughtful product design can support bespoke, real-world craftsmanship.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+🤝 Open Source & Contributions
 
-Follow these steps:
+This project is open source, and contributions are welcome.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+You can contribute by:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Improving UI/UX
 
-# Step 3: Install the necessary dependencies.
-npm i
+Fixing bugs or performance issues
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Enhancing accessibility
 
-**Edit a file directly in GitHub**
+Adding features or optimisations
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Improving documentation
 
-**Use GitHub Codespaces**
+Please feel free to fork the repository, create a feature branch, and submit a pull request. Thoughtful discussions, issues, and suggestions are also encouraged.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+🤖 Development Approach
 
-## What technologies are used for this project?
+Parts of this project were built using AI-assisted code generation to accelerate development and experimentation. All generated code has been reviewed, integrated, and adapted to fit the project’s architecture and goals. The final design and decisions remain developer-driven.
 
-This project is built with:
+🧑‍💻 Maintainer
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Tarun Chanamolu
+Creator & Maintainer of Customise.in
 
-## How can I deploy this project?
+I’m actively learning, building, and improving this project. Feedback, ideas, and contributions from the community are always welcome.
 
-Simply open [Lovable](https://lovable.dev/projects/d635543c-1e75-4b3a-84af-21fad5a72fa8) and click on Share -> Publish.
+📄 License
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is released under an open-source license. Please review the license file for usage and contribution guidelines.
